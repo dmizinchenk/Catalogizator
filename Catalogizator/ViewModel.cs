@@ -129,7 +129,7 @@ namespace Catalogizator
             AddCommand = new AddCommand(
                         () =>
                         {
-                            if (CheckPathToCatalog())
+                            //if (CheckPathToCatalog())
                             {
                                 //добавляем
                                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -153,11 +153,11 @@ namespace Catalogizator
                                 }
                                 ShowAll();
                             }
-                            else
-                            {
-                                MessageBox.Show("Нет каталога для хранения книг или файл настроек поврежден." +
-                                    "\nНевозможно произвести операцию.");
-                            }
+                            //else
+                            //{
+                            //    MessageBox.Show("Нет каталога для хранения книг или файл настроек поврежден." +
+                            //        "\nНевозможно произвести операцию.");
+                            //}
                         });
 
             EditCommand = new AddCommand(
