@@ -130,29 +130,30 @@ namespace Catalogizator
                         () =>
                         {
                             //if (CheckPathToCatalog())
-                            {
+                            //{
                                 //добавляем
-                                OpenFileDialog openFileDialog = new OpenFileDialog();
-                                openFileDialog.Filter = "Текстовые файлы (*.txt, *.doc, *.docx, *.djvu, *.pdf, *.fb2)" +
-                                "|*.txt;*.doc;*.docx;*.djvu;*.pdf;*.fb2";
-                                openFileDialog.RestoreDirectory = true;
 
-                                if (openFileDialog.ShowDialog() == true)
-                                {
+                                //OpenFileDialog openFileDialog = new OpenFileDialog();
+                                //openFileDialog.Filter = "Текстовые файлы (*.txt, *.doc, *.docx, *.djvu, *.pdf, *.fb2)" +
+                                //"|*.txt;*.doc;*.docx;*.djvu;*.pdf;*.fb2";
+                                //openFileDialog.RestoreDirectory = true;
+
+                                //if (openFileDialog.ShowDialog() == true)
+                                //{
                                     AddViewModel model = new AddViewModel();
-                                    if (model.IsCompleteAdded)
-                                    {
-                                        //перемещаем файл в наше хранилище
-                                        string fileName = openFileDialog.FileName.Substring(openFileDialog.FileName.LastIndexOf("\\"));
-                                        File.Move(openFileDialog.FileName, pathToLibrary + fileName);
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("Операция отменена");
-                                    }
-                                }
-                                ShowAll();
-                            }
+                                //    if (model.IsCompleteAdded)
+                                //    {
+                                //        //перемещаем файл в наше хранилище
+                                //        string fileName = openFileDialog.FileName.Substring(openFileDialog.FileName.LastIndexOf("\\"));
+                                //        File.Move(openFileDialog.FileName, pathToLibrary + fileName);
+                                //    }
+                                //    else
+                                //    {
+                                //        MessageBox.Show("Операция отменена");
+                                //    }
+                                //}
+                                //ShowAll();
+                            //}
                             //else
                             //{
                             //    MessageBox.Show("Нет каталога для хранения книг или файл настроек поврежден." +
