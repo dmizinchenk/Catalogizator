@@ -22,7 +22,7 @@ namespace Catalogizator
         string pathToLibrary = "";
 
         ICommand add;
-        //ICommand edit;
+        ICommand edit;
         //ICommand remove;
 
         public ICommand AddCommand
@@ -70,8 +70,7 @@ namespace Catalogizator
         }
         public ICommand EditCommand
         {
-            get; set;
-            //set
+            set; get;
             //{
             //    edit = new AddCommand(
             //            () =>
@@ -106,15 +105,15 @@ namespace Catalogizator
             }
 
         Book selectedBook = null!;
-        public Book SelectedItem {
+        public Book Selected {
             get => selectedBook;
             set
             {
                 selectedBook = value;
-                OnPropertyChanged(nameof(SelectedItem));
+                OnPropertyChanged(nameof(Selected));
             }
         }
-        public ObservableCollection<Book> MyBooks { get; set; }
+        public ObservableCollection<Book> MyBooks { get; set; } = new ObservableCollection<Book>();
 
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -124,14 +123,14 @@ namespace Catalogizator
         }
 
         public ViewModel()
-        {
+        {       
             ShowAll();
             AddCommand = new AddCommand(
                         () =>
                         {
                             //if (CheckPathToCatalog())
                             //{
-                                //добавляем
+                                ////добавляем
 
                                 //OpenFileDialog openFileDialog = new OpenFileDialog();
                                 //openFileDialog.Filter = "Текстовые файлы (*.txt, *.doc, *.docx, *.djvu, *.pdf, *.fb2)" +
@@ -162,12 +161,12 @@ namespace Catalogizator
                         });
 
             EditCommand = new AddCommand(
-                    () =>
-                    {
-                        AddViewModel model = new AddViewModel(selectedBook.Id);
-                        ShowAll();
-                    },
-                        () => SelectedItem != null
+                        () =>
+                        {
+                            AddViewModel model = new AddViewModel(selectedBook.Id);
+                            ShowAll();
+                        },
+                        () => Selected != null
                         );
 
             RemoveCommand = new AddCommand(
@@ -180,7 +179,7 @@ namespace Catalogizator
                             }
                             ShowAll();
                         },
-                        () => SelectedItem != null
+                        () => Selected != null
                         );
         }
 
@@ -221,13 +220,17 @@ namespace Catalogizator
         {
             using (LibraryContext context = new LibraryContext())
             {
-                MyBooks = new ObservableCollection<Book>(
-                    context.Books
+                var tempArray = context.Books
                                 .Include(book => book.Author)
                                 .Include(book => book.Genres)
                                 .Include(book => book.BbkCode)
                                 .Include(book => book.Info)
-                                .ToList());
+                                .ToArray();
+                MyBooks.Clear();
+                foreach (var item in tempArray)
+                {
+                    MyBooks.Add(item);
+                }
             }
         }
     }

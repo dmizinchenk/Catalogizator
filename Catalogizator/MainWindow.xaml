@@ -77,7 +77,7 @@
             <DataGrid x:Name="listBooks" 
                       IsReadOnly="True" 
                       AutoGenerateColumns="False" 
-                      SelectedItem="{Binding SelectedItem}"
+                      SelectedItem="{Binding Selected}"
                       ItemsSource="{Binding MyBooks}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название книги" Binding="{Binding Path=Title}"/>

@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Threading;
+using System.Windows.Documents.DocumentStructures;
 
 namespace Catalogizator
 {
@@ -117,6 +118,44 @@ namespace Catalogizator
                 context.Genres.Add(roman);
 
                 context.SaveChanges();
+            }
+        }
+
+        void EditDB()
+        {
+            using (LibraryContext context = new LibraryContext())
+            {
+                context.Database.EnsureCreated();
+
+
+                FileInfo file = new FileInfo("D:\\Обучение Шаг\\С#\\Курсовой\\Genres.txt");
+                using (StreamReader sr = file.OpenText())
+                {
+                    Chapter chapter = null!;
+                    do
+                    {
+                        string temp = sr.ReadLine()!;
+                        if (!temp.StartsWith('\t'))
+                        {   
+                            if(chapter != null)
+                            {
+                                context.Chapters.Add(chapter);
+                            }
+                            chapter = new Chapter();
+                            chapter.Name = temp;
+                        }
+                        else
+                        {
+                            Genre genre = new Genre();
+                            genre.Name = temp.Trim();
+                            chapter.Genres.Add(genre);
+                            context.Genres.Add(genre);
+                        }
+                    } while (!sr.EndOfStream);
+                    context.Chapters.Add(chapter);
+                    context.SaveChanges();
+                    sr.Close();
+                }
             }
         }
 

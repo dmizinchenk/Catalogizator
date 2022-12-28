@@ -14,12 +14,13 @@ namespace Catalogizator.Library
         public DbSet<BbkCode> BbkCodes { get; set; } = null!;
         public DbSet<Author> Authors { get; set; } = null!;
         public DbSet<Genre> Genres { get; set; } = null!;
+        public DbSet<Chapter> Chapters { get; set; } = null!;
 
 
         public LibraryContext()
         {
-            //Database.EnsureDeleted();
-            //Database.EnsureCreated();
+        //    Database.EnsureDeleted();
+        //    Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -49,11 +50,12 @@ namespace Catalogizator.Library
                         .HasMany(book => book.Genres)
                             .WithMany(genre => genre.Books);
 
-            modelBuilder.Entity<Book>().HasIndex(book => book.Isbn).IsUnique();
+            modelBuilder.Entity<Genre>()
+                        .HasOne(genre => genre.Chapter)
+                            .WithMany(chapter => chapter.Genres)
+                            .HasForeignKey(genre => genre.IdChapter);
 
-            //modelBuilder.Entity<Genre>()
-            //            .HasMany(genre => genre.Authors)
-            //                .WithMany(author => author.Genres);
+            modelBuilder.Entity<Book>().HasIndex(book => book.Isbn).IsUnique();
         }
     }
 }

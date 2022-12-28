@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Catalogizator.Library
 {
-    class Genre
+    class Chapter
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public List<Book> Books { get; set; } = new();
-        public int IdChapter { get; set; }
-        public Chapter Chapter { get; set; } = null!;
+        public List<Genre> Genres { get; set; } = new List<Genre>();
     }
 }

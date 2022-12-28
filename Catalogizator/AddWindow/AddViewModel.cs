@@ -28,6 +28,8 @@ namespace Catalogizator.AddWindow
             }
         }
 
+        public List<Chapter> Chapters { get; set; }
+
         public bool IsCompleteAdded { get; private set; } = false;
         public AddViewModel(int? idBook = null!) 
         {
@@ -46,10 +48,13 @@ namespace Catalogizator.AddWindow
                 else
                     this.book = context.Books
                                 .Include(book => book.Author)
-                                .Include(book => book.Genres)
+                                //.Include(book => book.Genres)
                                 .Include(book => book.BbkCode)
                                 .Include(book => book.Info)
                                 .FirstOrDefault(book => book.Id == idBook)!;
+
+                Chapters = context.Chapters.Include(chapter => chapter.Genres).ToList();
+
                 AddEditWindow window = new AddEditWindow();
                 window.DataContext = this;
                 if (window.ShowDialog() == true)
@@ -59,8 +64,8 @@ namespace Catalogizator.AddWindow
                         if(book.Info != null)
                             context.BookInfo.Add(book.Info);
                         context.Authors.Add(book.Author);
-                        foreach (var genre in book.Genres)
-                            context.Genres.Add(genre);
+                        //foreach (var genre in book.Genres)
+                        //    context.Genres.Add(genre);
                         context.BbkCodes.Add(book.BbkCode);
                         context.Books.Add(book);
                     }
